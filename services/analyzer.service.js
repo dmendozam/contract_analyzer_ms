@@ -1,28 +1,32 @@
 const {
   TextAnalyticsClient,
   AzureKeyCredential,
-  AnalyzeBatchAction,
 } = require("@azure/ai-text-analytics");
+
+require("dotenv").config();
 
 class analyzer {
   constructor() {
     this.client = new TextAnalyticsClient(
-      "<endpoint>",
-      new AzureKeyCredential("<API key>")
+      process.env.AZURE_LANGUAGE_ENDPOINT,
+      new AzureKeyCredential(process.env.AZURE_API_KEY)
     );
   }
   async analyzeContract(contractText, language) {
-    let document = [contractText];
-    let results = await this.client.extractKeyPhrases(document, language);
-    for (const result of results) {
-      if (result.error === undefined) {
-        console.log(" -- Extracted key phrases for input", result.id, "--");
-        console.log(result.keyPhrases);
-      } else {
-        console.error("Encountered an error:", result.error);
+    try {
+      let document = [contractText];
+      let results = await this.client.extractKeyPhrases(document, language);
+      for (const result of results) {
+        if (result.error === undefined) {
+          return result.keyPhrases;
+        } else {
+          throw new Error(result.error);
+        }
       }
+    } catch (error) {
+      console.log(error);
+      return false;
     }
-    return "analyzing.";
   }
 }
 
