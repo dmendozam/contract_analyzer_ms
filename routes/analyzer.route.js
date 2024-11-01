@@ -5,6 +5,7 @@ var analyzer = new analyzerService();
 
 /* GET home page. */
 router.get("/analyze/contract", function (req, res, next) {
+  console.log("logggs");
   let result = analyzer.analyzeContract();
   res.send(result);
 });
