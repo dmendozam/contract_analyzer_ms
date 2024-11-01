@@ -18,7 +18,7 @@ class analyzer {
       let results = await this.client.extractKeyPhrases(document, language);
       for (const result of results) {
         if (result.error === undefined) {
-          return result.keyPhrases;
+          return { keyPhrases: result.keyPhrases };
         } else {
           throw new Error(result.error);
         }
