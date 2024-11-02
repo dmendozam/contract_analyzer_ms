@@ -10,6 +10,9 @@ router.post("/analyze/contract", async function (req, res, next) {
         req.body.contract,
         req.body.language
       );
+      if (result == false) {
+        throw new Error("analyzeContractError");
+      }
       res.send(result);
     } catch (error) {
       res.status(500).send("Server Error");
@@ -17,7 +20,6 @@ router.post("/analyze/contract", async function (req, res, next) {
   } else {
     res.status(400).send("Bad Request");
   }
-  res.status(500).send("Server Error");
 });
 
 module.exports = router;
