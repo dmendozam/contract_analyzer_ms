@@ -1,3 +1,4 @@
+const cors = require("cors");
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -8,6 +9,13 @@ var indexRouter = require("./routes/index.route");
 var analyzerRouter = require("./routes/analyzer.route");
 
 var app = express();
+
+app.use(
+  cors({
+    origin: "*", // or '*' to allow all domains
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 require("dotenv").config();
 app.use(logger("dev"));

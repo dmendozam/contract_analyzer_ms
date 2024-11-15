@@ -55,7 +55,8 @@ class analyzer {
         redirect: "follow",
       };
       let summaryRequest = await fetch(
-        "https://cbselanguage.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2023-04-01",
+        process.env.AZURE_LANGUAGE_ENDPOINT +
+          "language/analyze-text/jobs?api-version=2023-04-01",
         requestOptions
       );
       let resultLocation = summaryRequest.headers.get("operation-location");
